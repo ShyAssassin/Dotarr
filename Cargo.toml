@@ -1,0 +1,14 @@
+[package]
+name = "dotarr"
+authors = ["ShyAssassin <49711232+ShyAssassin@users.noreply.github.com>"]
+description = "A simple CLI tool to manage your dotfiles"
+license = "MIT"
+version = "0.1.0"
+edition = "2021"
+
+
+[dependencies]
+clap = {version = "4.2.1", features = ["derive"]}
+clap_complete = "4.2.0"
+clap_complete_fig = "4.2.0"
+serde = "1.0.159"

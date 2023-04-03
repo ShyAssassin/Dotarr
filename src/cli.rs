@@ -18,19 +18,19 @@ pub enum CliSubcommand {
 
     #[command(about = "Add a new dotfile")]
     Add {
-        #[arg(value_hint = ValueHint::FilePath, help = "Path to the dotfile")]
+        #[arg(help = "Path to the dotfile")]
         file: PathBuf,
     },
 
     #[command(about = "Remove a dotfile")]
     Remove {
-        #[arg(value_hint = ValueHint::FilePath, help = "Path to the dotfile")]
+        #[arg(help = "Path to the dotfile")]
         file: PathBuf,
     },
 
     #[command(about = "Edit a dotfile with your default editor")]
     Edit {
-        #[arg(value_hint = ValueHint::FilePath, help = "Path to the dotfile")]
+        #[arg(help = "Path to the dotfile")]
         path: PathBuf,
         
         #[arg(value_hint = ValueHint::CommandName, help = "Override editor specified in config file and environment variables")]

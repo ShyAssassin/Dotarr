@@ -131,7 +131,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "dotarr"
+name = "dottar"
 version = "0.1.0"
 dependencies = [
  "clap",

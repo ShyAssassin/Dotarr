@@ -1,5 +1,5 @@
 [package]
-name = "dotarr"
+name = "dottar"
 authors = ["ShyAssassin <49711232+ShyAssassin@users.noreply.github.com>"]
 description = "A simple CLI tool to manage your dotfiles"
 license = "MIT"

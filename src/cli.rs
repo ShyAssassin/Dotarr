@@ -56,9 +56,9 @@ pub struct CliOpts {
 
 
 #[derive(Debug, Parser, PartialEq)]
-#[command(name = "Dotarr")]
+#[command(name = "Dottar")]
 #[command(version = "0.1.0")]
-#[command(bin_name = "dotarr")]
+#[command(bin_name = "dottar")]
 #[command(author = "ShyAssassin")]
 #[command(about = "A simple CLI tool to manage your dotfiles")]
 pub struct Cli {

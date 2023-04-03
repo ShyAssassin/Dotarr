@@ -4,18 +4,14 @@ mod config;
 use std::env;
 use std::path::{Path};
 use std::fs;
-use std::fs::{copy, create_dir_all};
+use std::fs::{copy, create_dir_all, remove_file};
 use clap::{Parser, CommandFactory};
 
 fn main() {
     let home_dir = env::var("HOME").unwrap();
     let dotfiles_dir = Path::new(&home_dir).join(".dotfiles");
     let current_dir = env::current_dir().unwrap();
-    fs::create_dir(&dotfiles_dir).unwrap_or_default();
-    println!("{}", home_dir); 
-    println!("{}", dotfiles_dir.display());
     let args = cli::Cli::parse();
-
 
 
     match args.command {
@@ -26,9 +22,9 @@ fn main() {
         cli::CliSubcommand::Add { file } => {
             // create full path to file / dir
             let full_path = current_dir.join(&file);
-            if full_path.is_file(){
-                // get file path relative to home dir
-                let dest_path = full_path.strip_prefix(&home_dir).unwrap();
+            // get file path relative to home dir
+            let dest_path = full_path.strip_prefix(&home_dir).unwrap();
+            if full_path.is_file() {
                 // create parent dir if it doesn't exist
                 let parent_dir = dotfiles_dir.join(dest_path.parent().unwrap());
                 create_dir_all(parent_dir).unwrap();
@@ -37,7 +33,6 @@ fn main() {
             } 
             else if full_path.is_dir() {
                 // get file path relative to home dir
-                let dest_path = full_path.strip_prefix(&home_dir).unwrap();
                 util::copy_recursively(&full_path,  dotfiles_dir.join(dest_path)).expect("Failed to copy directory");
             }
             else {
@@ -46,7 +41,17 @@ fn main() {
         }
 
         cli::CliSubcommand::Remove { file } => {
-            println!("Removing dotfile {file:?}...");
+            // create full path to file / dir
+            let full_path = current_dir.join(&file);
+            // get file path relative to home dir
+            let dest_path = full_path.strip_prefix(&home_dir).unwrap();
+            if full_path.is_file() {
+                remove_file(dotfiles_dir.join(dest_path)).expect("Failed to remove file");
+            } else if full_path.is_dir() {
+                fs::remove_dir_all(dotfiles_dir.join(dest_path)).expect("Failed to remove directory");
+            } else {
+                println!("Cannot find file or directory!")
+            }
         }
 
         cli::CliSubcommand::Edit { path, editor } => {

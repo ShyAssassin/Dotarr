@@ -15,8 +15,8 @@ fn main() {
 
 
     match args.command {
-        cli::CliSubcommand::Init { force } => {
-            println!("Initializing dotfile repository... force: {force:?}");
+        cli::CliSubcommand::Init { repository, force } => {
+            println!("Initializing dotfile repository from {repository:?}... force: {force:?}");
         }
 
         cli::CliSubcommand::Add { file } => {
@@ -24,6 +24,7 @@ fn main() {
             let full_path = current_dir.join(&file);
             // get file path relative to home dir
             let dest_path = full_path.strip_prefix(&home_dir).unwrap();
+            println!("Adding {full_path:?} to dotfiles repository as {dest_path:?}...");
             if full_path.is_file() {
                 // create parent dir if it doesn't exist
                 let parent_dir = dotfiles_dir.join(dest_path.parent().unwrap());
@@ -45,6 +46,7 @@ fn main() {
             let full_path = current_dir.join(&file);
             // get file path relative to home dir
             let dest_path = full_path.strip_prefix(&home_dir).unwrap();
+            println!("Removing {full_path:?} from dotfiles repository as {dest_path:?}...");
             if full_path.is_file() {
                 remove_file(dotfiles_dir.join(dest_path)).expect("Failed to remove file");
             } else if full_path.is_dir() {
@@ -66,6 +68,10 @@ fn main() {
             let mut cmd = cli::Cli::command();
             println!("Generating completion file for {generator:?}...");
             cli::print_completions(generator, &mut cmd);
+        }
+        
+        _ => {
+            println!("Not implemented yet!");
         }
     }
 }

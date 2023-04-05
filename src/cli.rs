@@ -12,6 +12,8 @@ pub fn print_completions<G: Generator>(gen: G, cmd: &mut Command) {
 pub enum CliSubcommand {
     #[command(about = "Initialize a new dotfile repository")]
     Init {
+        #[arg(help = "git url to remote repository / github username")]
+        repository: String,
         #[arg(long, help = "Force initialization even if a repository already exists")]
         force: bool,
     },

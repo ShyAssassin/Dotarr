@@ -11,4 +11,5 @@ edition = "2021"
 clap = {version = "4.2.1", features = ["derive"]}
 clap_complete = "4.2.0"
 clap_complete_fig = "4.2.0"
+git2 = "0.17.0"
 serde = "1.0.159"

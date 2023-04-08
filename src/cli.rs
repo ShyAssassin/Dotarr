@@ -13,7 +13,7 @@ pub enum CliSubcommand {
     #[command(about = "Initialize a new dotfile repository")]
     Init {
         #[arg(help = "git url to remote repository / github username")]
-        repository: String,
+        repository: Option<String>,
         #[arg(long, help = "Force initialization even if a repository already exists")]
         force: bool,
     },
@@ -30,6 +30,15 @@ pub enum CliSubcommand {
         file: PathBuf,
     },
 
+    #[command(about = "Get diff between dotfile and dotfiles repository")]
+    Diff {
+        #[arg(help = "Path to the dotfile, if left empty, all dotfiles will be diffed")]
+        file: Option<PathBuf>,
+
+        #[arg(value_hint = ValueHint::CommandName, help="Override diff viewer specified in config file and environment variables")]
+        viewer: Option<String>,
+    },
+
     #[command(about = "Edit a dotfile with your default editor")]
     Edit {
         #[arg(help = "Path to the dotfile")]
@@ -39,8 +48,11 @@ pub enum CliSubcommand {
         editor: Option<String>,
     },
 
-    #[command(alias = "ls", about = "List all dotfiles")]
+    #[command(alias = "ls", about = "List all tracked dotfiles")]
     List,
+
+    #[command(about = "Change directory to dotfiles repository")]
+    Cd,
 
     #[command(about = "Generate shell completions")]
     Generate {

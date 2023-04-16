@@ -30,6 +30,12 @@ pub enum CliSubcommand {
         file: PathBuf,
     },
 
+    #[command(about = "Deploy dotfiles to home directory")]
+    Deploy {
+        #[arg(long, help = "If enabled, a dry run will be performed, no files will be changed")]
+        dry_run: bool,
+    },
+
     #[command(about = "Get diff between dotfile and dotfiles repository")]
     Diff {
         #[arg(help = "Path to the dotfile, if left empty, all dotfiles will be diffed")]
